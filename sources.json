@@ -1,0 +1,20 @@
+[
+  {
+    "id": "johnshall",
+    "project": "https://github.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever",
+    "license": "CC-BY-SA-4.0",
+    "format": "shadowrocket-conf",
+    "mainUrl": "https://raw.githubusercontent.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever/release/sr_top500_banlist.conf",
+    "mirrorUrl": "https://johnshall.github.io/Shadowrocket-ADBlock-Rules-Forever/sr_top500_banlist.conf",
+    "minimumRules": 15000
+  },
+  {
+    "id": "blackmatrix7",
+    "project": "https://github.com/blackmatrix7/ios_rule_script",
+    "license": "GPL-2.0-only",
+    "format": "shadowrocket-domain-set",
+    "mainUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Proxy/Proxy_Domain.list",
+    "mirrorUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Proxy/Proxy_Domain.list",
+    "minimumRules": 3000
+  }
+]

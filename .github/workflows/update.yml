@@ -1,0 +1,32 @@
+name: Update Shadowrocket rules
+
+on:
+  schedule:
+    - cron: '24 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: published-shadowrocket-rules
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify routing and aggregation
+        run: node --test
+      - name: Collect and compile rules
+        run: node scripts/update.mjs
+      - name: Publish only validated changes
+        run: |
+          git add -- dist/direct.list dist/proxy.list dist/shadowrocket.rules dist/manifest.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update published Shadowrocket routing rules'
+          git push

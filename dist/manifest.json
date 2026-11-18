@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "sha256": "abd81c256675c4051aad483bd93798d8cc9312ebb9488014100193c85533f644",
+  "bytes": 1577155,
+  "ruleCount": 30651,
+  "localDirectCount": 36,
+  "localProxyCount": 28,
+  "sources": [
+    {
+      "id": "johnshall",
+      "project": "https://github.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever",
+      "license": "CC-BY-SA-4.0",
+      "active": true,
+      "lastRuleChange": "2026-11-17T23:02:46.000Z",
+      "inputCount": 30204,
+      "inputSha256": "a58d20182e57e91c40951f14b3464bac5d5acc0f49de9d3106360792fdaceb63",
+      "publishedCount": 28297
+    },
+    {
+      "id": "blackmatrix7",
+      "project": "https://github.com/blackmatrix7/ios_rule_script",
+      "license": "GPL-2.0-only",
+      "active": true,
+      "lastRuleChange": "2026-10-25T20:16:32.000Z",
+      "inputCount": 6859,
+      "inputSha256": "478d7b088b1f61d9086b28c82a55921e0738912140196c8996550e0a0b8f1b25",
+      "publishedCount": 2290
+    }
+  ]
+}
