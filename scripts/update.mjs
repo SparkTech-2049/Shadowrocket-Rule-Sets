@@ -66,21 +66,20 @@ try {
   const result = mergeRules(direct, proxy, fetched);
   const directLines = renderRules(result.direct, 'DIRECT');
   const baseLines = renderRules(result.own, 'PROXY');
-  const linesBySource = result.proxy.map(({ rules, ...source }) => ({ ...source, lines: renderRules(rules, 'PROXY') }));
-  const sections = linesBySource.flatMap(({ id, project, license, lines }) => lines.length
-    ? [`# ${id} — ${project} — ${license}; normalized and deduplicated`, ...lines]
+  const sections = (format) => result.proxy.flatMap(({ id, project, license, rules }) => rules.length
+    ? [`# ${id} — ${project} — ${license}; normalized and deduplicated`, ...format(rules)]
     : []);
-  const bundle = textFile(['# Shadowrocket-Rule-Sets v1', ...directLines, ...baseLines, ...sections]);
-  const ruleCount = directLines.length + baseLines.length + linesBySource.reduce((sum, item) => sum + item.lines.length, 0);
+  const bundle = textFile(['# Shadowrocket-Rule-Sets v1', ...directLines, ...baseLines, ...sections((rules) => renderRules(rules, 'PROXY'))]);
+  const ruleCount = directLines.length + baseLines.length + result.proxy.reduce((sum, item) => sum + item.rules.length, 0);
   if (ruleCount < 50 || Buffer.byteLength(bundle) > 3_000_000) throw new Error('aggregate rule count or file size is out of bounds');
   const manifest = {
     version: 1, sha256: hash(bundle), bytes: Buffer.byteLength(bundle), ruleCount,
     localDirectCount: directLines.length, localProxyCount: baseLines.length,
-    sources: linesBySource.map(({ lines, ...source }) => ({ ...source, publishedCount: lines.length })),
+    sources: result.proxy.map(({ rules, ...source }) => ({ ...source, publishedCount: rules.length })),
   };
   const files = {
-    'direct.list': textFile(directLines),
-    'proxy.list': textFile([...baseLines, ...sections]),
+    'direct.list': textFile(result.direct),
+    'proxy.list': textFile([...result.own, ...sections((rules) => rules)]),
     'shadowrocket.rules': bundle,
     'manifest.json': `${JSON.stringify(manifest, null, 2)}\n`,
   };

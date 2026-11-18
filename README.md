@@ -4,8 +4,8 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| [direct.list](dist/direct.list) | 国内服务与 Apple 服务的直连规则 |
-| [proxy.list](dist/proxy.list) | 常用海外服务和经清洗去重后的上游代理规则 |
+| [direct.list](dist/direct.list) | 可通过 `RULE-SET` 引用，并在配置中指派 `DIRECT` |
+| [proxy.list](dist/proxy.list) | 可通过 `RULE-SET` 引用，并在配置中指派代理组 |
 | [shadowrocket.rules](dist/shadowrocket.rules) | 供 MiSub 内嵌到完整配置的规则片段 |
 | [manifest.json](dist/manifest.json) | 产物 SHA-256、来源状态、输入和发布条数 |
 
