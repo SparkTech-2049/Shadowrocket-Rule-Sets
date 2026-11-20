@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "repositories": [
+    {
+      "repository": "ACL4SSR/ACL4SSR",
+      "project": "https://github.com/ACL4SSR/ACL4SSR",
+      "license": "CC-BY-SA-4.0",
+      "ref": "master",
+      "path": "Clash/ProxyGFWlist.list",
+      "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list",
+      "format": "shadowrocket-rule-list",
+      "inputSha256": "be7f8bd2981d6f7db3d4330466b681afaff37e751fd2ae0254b793142d3e3e0b",
+      "lastRuleChange": "2025-12-06T02:33:57Z",
+      "state": "stale",
+      "reason": "rule-content-older-than-three-months"
+    },
+    {
+      "repository": "AnonyJcy/shadowrocket-rules",
+      "project": "https://github.com/AnonyJcy/shadowrocket-rules",
+      "license": "NOASSERTION",
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    },
+    {
+      "repository": "cn-wanmei/Popular-Rules-Collection",
+      "project": "https://github.com/cn-wanmei/Popular-Rules-Collection",
+      "license": "MIT",
+      "state": "unavailable",
+      "reason": "no-readable-proxy-rule-file"
+    },
+    {
+      "repository": "dler-io/Rules",
+      "project": "https://github.com/dler-io/Rules",
+      "license": null,
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    },
+    {
+      "repository": "GMOogway/shadowrocket-rules",
+      "project": "https://github.com/GMOogway/shadowrocket-rules",
+      "license": "GPL-3.0",
+      "ref": "master",
+      "path": "sr_proxy_list.module",
+      "url": "https://raw.githubusercontent.com/GMOogway/shadowrocket-rules/master/sr_proxy_list.module",
+      "format": "shadowrocket-conf",
+      "inputSha256": "b54858dc611e80b1b50f6a4847d69e8a111beec8c5d2de4fd600379d0b05f370",
+      "lastRuleChange": "2026-11-19T03:49:38Z",
+      "sources": [
+        "crazy-max/windowsspyblocker",
+        "felixonmars/dnsmasq-china-list",
+        "gfwlist/gfwlist",
+        "loyalsoldier/cn-blocked-domain",
+        "v2fly/domain-list-community"
+      ],
+      "coverage": {
+        "inputCount": 27386,
+        "conflictsWithDirect": 79,
+        "alreadyCoveredOrRedundant": 7092,
+        "additionalRules": 20215,
+        "examples": [
+          "DOMAIN,1password.drift.click",
+          "DOMAIN,a4e8s8k3.map2.ssl.hwcdn.net",
+          "DOMAIN,adobeereg.com",
+          "DOMAIN,agb9r0ad.qllfkl.com",
+          "DOMAIN,angle.com.tw"
+        ]
+      },
+      "state": "candidate"
+    },
+    {
+      "repository": "LOWERTOP/ShadowStore",
+      "project": "https://github.com/LOWERTOP/ShadowStore",
+      "license": null,
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    },
+    {
+      "repository": "Master-Yoba/shadowrocket-rules",
+      "project": "https://github.com/Master-Yoba/shadowrocket-rules",
+      "license": null,
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    },
+    {
+      "repository": "PaPerseller/chn-iplist",
+      "project": "https://github.com/PaPerseller/chn-iplist",
+      "license": "MIT",
+      "ref": "master",
+      "path": "ruleset/proxy-special.list",
+      "url": "https://raw.githubusercontent.com/PaPerseller/chn-iplist/master/ruleset/proxy-special.list",
+      "format": "shadowrocket-rule-list",
+      "inputSha256": "d3ba96e435bdfae7c53e26672ae4581913b9f838323e245bdb6282cec7b0d277",
+      "lastRuleChange": "2025-11-12T04:51:26Z",
+      "state": "stale",
+      "reason": "rule-content-older-than-three-months"
+    },
+    {
+      "repository": "s-theo/dotfiles",
+      "project": "https://github.com/s-theo/dotfiles",
+      "license": "MIT",
+      "state": "unavailable",
+      "reason": "no-readable-proxy-rule-file"
+    },
+    {
+      "repository": "shankangk/AntiLeak-AdBlock",
+      "project": "https://github.com/shankangk/AntiLeak-AdBlock",
+      "license": "MIT",
+      "state": "unavailable",
+      "reason": "no-readable-proxy-rule-file"
+    },
+    {
+      "repository": "tickmao/Rules",
+      "project": "https://github.com/tickmao/Rules",
+      "license": null,
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    },
+    {
+      "repository": "zeklop/shadowrocket-configs",
+      "project": "https://github.com/zeklop/shadowrocket-configs",
+      "license": null,
+      "state": "review",
+      "reason": "repository-license-needs-review"
+    }
+  ]
+}
