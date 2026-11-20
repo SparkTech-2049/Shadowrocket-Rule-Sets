@@ -1,42 +1,10 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { extractRules, hash, isStale, mergeRules, renderRules } from './rules.mjs';
+import { extractRules, hash, mergeRules, renderRules } from './rules.mjs';
+import { resolveSource, textFile } from './sources.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root), 'utf8');
-const limit = 8_000_000;
 const now = new Date();
-
-async function download(source) {
-  const failures = [];
-  for (const url of [source.mainUrl, source.mirrorUrl].filter(Boolean)) {
-    try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const text = await response.text();
-      if (Buffer.byteLength(text) > limit) throw new Error('upstream file exceeds eight megabytes');
-      const rules = extractRules(text, source.format);
-      if (rules.length < source.minimumRules) throw new Error(`only ${rules.length} valid rules`);
-      return { rules, text };
-    } catch (error) {
-      failures.push(error.message);
-    }
-  }
-  throw new Error(`${source.id}: ${failures.join('; ')}`);
-}
-
-function upstreamDate(text, format) {
-  const match = format === 'shadowrocket-conf'
-    ? text.match(/^# build time: UTC (\d{4}-\d\d-\d\d) (\d\d:\d\d:\d\d)/m)
-    : text.match(/^# UPDATED: (\d{4}-\d\d-\d\d) (\d\d:\d\d:\d\d)/m);
-  if (!match) throw new Error('upstream did not include its publication date');
-  const date = Date.parse(`${match[1]}T${match[2]}${format === 'shadowrocket-conf' ? 'Z' : '+08:00'}`);
-  if (!Number.isFinite(date) || date > now.getTime() + 300_000) throw new Error('invalid upstream publication date');
-  return new Date(Math.min(date, now.getTime())).toISOString();
-}
-
-function textFile(lines) {
-  return `${lines.join('\n')}\n`;
-}
 
 try {
   const [config, previous, directText, proxyText] = await Promise.all([
@@ -49,18 +17,17 @@ try {
     read('rules/proxy.list'),
   ]);
 
-  const fetched = await Promise.all(config.map(async (source) => {
-    const { rules, text } = await download(source);
-    const digest = hash(textFile(rules));
-    const stored = previous.sources.find(({ id }) => id === source.id);
-    const sourceDate = upstreamDate(text, source.format);
-    const lastRuleChange = stored?.inputSha256 === digest ? stored.lastRuleChange : sourceDate;
-    const active = !isStale(lastRuleChange, now);
-    return {
-      id: source.id, project: source.project, license: source.license, active,
-      lastRuleChange, inputCount: rules.length, inputSha256: digest, rules: active ? rules : [],
-    };
-  }));
+  if (!config.length || new Set(config.map(({ id }) => id)).size !== config.length) {
+    throw new Error('source list must contain unique source ids');
+  }
+  const snapshots = new Map();
+  const fetched = await Promise.all(config.map((source) => resolveSource(
+    source,
+    previous.sources.find(({ id }) => id === source.id),
+    now,
+    { readSnapshot: read, saveSnapshot: (path, body) => snapshots.set(path, body) },
+  )));
+  if (!fetched.some(({ verified }) => verified)) throw new Error('no upstream could be verified');
   const direct = extractRules(directText, 'local');
   const proxy = extractRules(proxyText, 'local');
   const result = mergeRules(direct, proxy, fetched);
@@ -75,7 +42,7 @@ try {
   const manifest = {
     version: 1, sha256: hash(bundle), bytes: Buffer.byteLength(bundle), ruleCount,
     localDirectCount: directLines.length, localProxyCount: baseLines.length,
-    sources: result.proxy.map(({ rules, ...source }) => ({ ...source, publishedCount: rules.length })),
+    sources: result.proxy.map(({ rules, verified, ...source }) => ({ ...source, publishedCount: rules.length })),
   };
   const files = {
     'direct.list': textFile(result.direct),
@@ -83,11 +50,14 @@ try {
     'shadowrocket.rules': bundle,
     'manifest.json': `${JSON.stringify(manifest, null, 2)}\n`,
   };
-  await mkdir(new URL('dist/', root), { recursive: true });
-  await Promise.all(Object.entries(files).map(([filename, body]) => writeFile(new URL(`dist/${filename}`, root), body, 'utf8')));
+  await Promise.all(['dist/', 'snapshots/'].map((path) => mkdir(new URL(path, root), { recursive: true })));
+  await Promise.all([
+    ...Object.entries(files).map(([filename, body]) => writeFile(new URL(`dist/${filename}`, root), body, 'utf8')),
+    ...[...snapshots].map(([path, body]) => writeFile(new URL(path, root), body, 'utf8')),
+  ]);
   console.log(`Compiled ${ruleCount} rules (${manifest.bytes} bytes)`);
   for (const source of manifest.sources) {
-    console.log(`${source.id}: ${source.active ? source.publishedCount + ' rules' : 'skipped as stale'}; rules updated ${source.lastRuleChange}`);
+    console.log(`${source.id}: ${source.status}, ${source.publishedCount} rules; content last changed ${source.lastRuleChange ?? 'unknown'}`);
   }
 } catch (error) {
   console.error(`Rule collection failed: ${error.message}`);

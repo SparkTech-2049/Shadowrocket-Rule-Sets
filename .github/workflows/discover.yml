@@ -1,0 +1,42 @@
+name: Discover Shadowrocket source candidates
+
+on:
+  schedule:
+    - cron: '47 2 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/discover.yml'
+      - 'scripts/discover.mjs'
+      - 'scripts/discovery.mjs'
+      - 'scripts/fetch.mjs'
+      - 'sources.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: published-shadowrocket-rules
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify classification and coverage
+        run: node --test
+      - name: Discover and evaluate public rules
+        run: node scripts/discover.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish changes to the candidate report
+        run: |
+          git add -- reports/candidates.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update Shadowrocket source candidate report'
+          git push

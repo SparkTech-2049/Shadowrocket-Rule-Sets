@@ -6,6 +6,7 @@
     "format": "shadowrocket-conf",
     "mainUrl": "https://raw.githubusercontent.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever/release/sr_top500_banlist.conf",
     "mirrorUrl": "https://johnshall.github.io/Shadowrocket-ADBlock-Rules-Forever/sr_top500_banlist.conf",
+    "discoveryReadme": "https://raw.githubusercontent.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever/release/readme.md",
     "minimumRules": 15000
   },
   {
@@ -15,6 +16,7 @@
     "format": "shadowrocket-domain-set",
     "mainUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Proxy/Proxy_Domain.list",
     "mirrorUrl": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Shadowrocket/Proxy/Proxy_Domain.list",
+    "discoveryReadme": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Proxy/README.md",
     "minimumRules": 3000
   }
 ]
