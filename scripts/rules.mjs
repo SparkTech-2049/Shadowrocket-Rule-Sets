@@ -43,6 +43,10 @@ export function extractRules(text, format) {
     let result;
     if (format === 'shadowrocket-domain-set') {
       result = normalizeRule(line.startsWith('.') ? 'DOMAIN-SUFFIX' : 'DOMAIN', line.replace(/^\./, ''));
+    } else if (format === 'shadowrocket-rule-list') {
+      if (!option && !extra && (policy === undefined || (type === 'IP-CIDR' && policy === 'no-resolve'))) {
+        result = normalizeRule(type.toUpperCase(), value);
+      }
     } else if (format === 'local') {
       if (policy === undefined) result = normalizeRule(type, value);
       if (!result) throw new Error(`Invalid local routing rule: ${line}`);
@@ -59,16 +63,20 @@ export function hash(content) {
 }
 
 export function isStale(date, now) {
+  return Date.parse(date) < freshnessCutoff(now).getTime();
+}
+
+export function freshnessCutoff(now) {
   const cutoff = new Date(now);
   const day = cutoff.getUTCDate();
   cutoff.setUTCDate(1);
   cutoff.setUTCMonth(cutoff.getUTCMonth() - 3);
   const days = new Date(Date.UTC(cutoff.getUTCFullYear(), cutoff.getUTCMonth() + 1, 0)).getUTCDate();
   cutoff.setUTCDate(Math.min(day, days));
-  return Date.parse(date) < cutoff.getTime();
+  return cutoff;
 }
 
-function covers(rules, rule) {
+export function covers(rules, rule) {
   if (rules.has(rule)) return true;
   const [type, domain] = rule.split(',');
   if (!type.startsWith('DOMAIN')) return false;
