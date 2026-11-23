@@ -9,10 +9,24 @@
       "path": "Clash/ProxyGFWlist.list",
       "url": "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list",
       "format": "shadowrocket-rule-list",
-      "inputSha256": "be7f8bd2981d6f7db3d4330466b681afaff37e751fd2ae0254b793142d3e3e0b",
-      "lastRuleChange": "2025-12-06T02:33:57Z",
-      "state": "stale",
-      "reason": "rule-content-older-than-three-months"
+      "inputSha256": "313eea5e0fb23e8bc97c574d4d4d43a1fb6c0ee0e84c4460565da07780d07704",
+      "lastRuleChange": "2026-11-21T15:29:27Z",
+      "sources": [],
+      "coverage": {
+        "inputCount": 7198,
+        "conflictsWithDirect": 24,
+        "alreadyCoveredOrRedundant": 6972,
+        "additionalRules": 202,
+        "examples": [
+          "DOMAIN,api.groq.com",
+          "DOMAIN,api.together.xyz",
+          "DOMAIN,console.groq.com",
+          "DOMAIN-SUFFIX,2mdn.net",
+          "DOMAIN-SUFFIX,af.edu"
+        ]
+      },
+      "state": "review",
+      "reason": "upstream-provenance-needs-review"
     },
     {
       "repository": "AnonyJcy/shadowrocket-rules",
@@ -43,8 +57,8 @@
       "path": "sr_proxy_list.module",
       "url": "https://raw.githubusercontent.com/GMOogway/shadowrocket-rules/master/sr_proxy_list.module",
       "format": "shadowrocket-conf",
-      "inputSha256": "b54858dc611e80b1b50f6a4847d69e8a111beec8c5d2de4fd600379d0b05f370",
-      "lastRuleChange": "2026-11-19T03:49:38Z",
+      "inputSha256": "12cb0be88386aa43b9b946341ba05aca286a0fce59056475e34a2accb9bc59d0",
+      "lastRuleChange": "2026-11-23T03:01:11Z",
       "sources": [
         "crazy-max/windowsspyblocker",
         "felixonmars/dnsmasq-china-list",
@@ -53,10 +67,10 @@
         "v2fly/domain-list-community"
       ],
       "coverage": {
-        "inputCount": 27386,
+        "inputCount": 27296,
         "conflictsWithDirect": 79,
-        "alreadyCoveredOrRedundant": 7092,
-        "additionalRules": 20215,
+        "alreadyCoveredOrRedundant": 7113,
+        "additionalRules": 20104,
         "examples": [
           "DOMAIN,1password.drift.click",
           "DOMAIN,a4e8s8k3.map2.ssl.hwcdn.net",
