@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "sha256": "46900b54793d715ee6bbeb62e715da3683056387adcee0fad2e79bc31ebc8ced",
-  "bytes": 1577455,
-  "ruleCount": 30657,
+  "sha256": "a9aa2d2c0e6f504309b1c2bd5af03c8cd9bbdb298f72161a93cd8fa9fbe7e52a",
+  "bytes": 1577550,
+  "ruleCount": 30659,
   "localDirectCount": 36,
   "localProxyCount": 28,
   "sources": [
@@ -12,10 +12,10 @@
       "license": "CC-BY-SA-4.0",
       "active": true,
       "status": "live",
-      "lastRuleChange": "2026-11-20T23:02:37.000Z",
-      "inputCount": 30212,
-      "inputSha256": "467718c2c31707aa88510b60eaeca7b264f0a84cf975d38cfff786eb576817ce",
-      "publishedCount": 28302
+      "lastRuleChange": "2026-11-27T23:02:46.000Z",
+      "inputCount": 30214,
+      "inputSha256": "adbed51ec9faa768553ec1ec906e17ae641cd12f8467c4848433bb635e1cf85c",
+      "publishedCount": 28304
     },
     {
       "id": "blackmatrix7",
